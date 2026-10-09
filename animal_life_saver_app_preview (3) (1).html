@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Life Saver</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'sand-bg': '#E8E2D5',
+            'sand-card': '#FAF7F2',
+            'whale-blue': '#4C7D8E',
+            'deep-ocean': '#2D4B54',
+            'pastel-coral': '#E89083',
+            'pastel-mint': '#98D8C3',
+            'pastel-yellow': '#F4D35E',
+            'pastel-purple': '#CDB4DB',
+          },
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            body: ['Quicksand', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #D3CBC0;
+    }
+    .font-display {
+      font-family: 'Fredoka', sans-serif;
+    }
+    .app-screen {
+      display: none;
+    }
+    .app-screen.active {
+      display: flex;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+    .floating-creature {
+      animation: floatSlow 4s ease-in-out infinite;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .typing-dot {
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4">
+
+  <!-- Mobile Device Simulator Container -->
+  <div class="w-full max-w-md h-[840px] bg-sand-bg rounded-[40px] shadow-2xl overflow-hidden flex flex-col border-[8px] border-slate-700 relative">
+    
+    <!-- Top Status Bar Simulation -->
+    <div class="w-full bg-sand-bg px-6 pt-3 pb-2 flex justify-between items-center text-xs text-slate-600 font-semibold z-20">
+      <span>9:41</span>
+      <div class="flex items-center space-x-1">
+        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+        <i data-lucide="battery" class="w-4 h-4"></i>
+      </div>
+    </div>
+
+    <!-- MAIN SCREEN CONTENT AREA -->
+    <div class="flex-1 overflow-y-auto relative flex flex-col">
+
+      <!-- ================= SCREEN 1: ONBOARDING & INFO ================= -->
+      <section id="screen-onboarding" class="app-screen active flex-col h-full p-6 text-center justify-between">
+        
+        <!-- Header / Logo Graphic Area -->
+        <div class="flex flex-col items-center mt-1">
+          
+          <!-- SVG Matching Exact Logo Artwork -->
+          <div class="relative w-56 h-56 flex items-center justify-center floating-creature my-1">
+            <svg viewBox="0 0 320 260" class="w-full h-full drop-shadow-sm">
+              <!-- Soft Teal-Blue Pastel Blob in background -->
+              <path d="M 120,50 C 70,40 50,90 60,140 C 70,190 120,220 180,210 C 230,200 250,150 230,100 C 210,50 170,60 120,50 Z" fill="#8FC2D0" opacity="0.85"/>
+              <path d="M 175,70 C 150,55 120,60 110,85 C 100,110 130,130 160,120 C 190,110 200,85 175,70 Z" fill="#A8D5E2" opacity="0.9"/>
+
+              <!-- Water Spout Droplets -->
+              <path d="M 182,38 C 172,52 182,68 182,68 C 182,68 192,52 182,38 Z" fill="none" stroke="#2D5262" stroke-width="4.5" stroke-linejoin="round"/>
+              <path d="M 160,52 C 152,62 160,74 160,74 C 160,74 168,62 160,52 Z" fill="none" stroke="#2D5262" stroke-width="4" stroke-linejoin="round"/>
+
+              <!-- Whale Main Body Lineart -->
+              <path d="
+                M 68,112 
+                C 48,95 28,82 22,96 
+                C 18,105 32,118 48,122 
+                C 30,132 18,145 25,154 
+                C 32,162 52,142 66,128 
+                C 105,100 155,78 220,90 
+                C 260,98 282,125 272,152 
+                C 255,190 185,188 135,178 
+                C 98,170 78,142 68,112 Z
+              " fill="#E8E2D5" stroke="#2D5262" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- Belly Texture / Pleat Lines -->
+              <path d="M 195,138 C 225,142 250,154 260,162" fill="none" stroke="#2D5262" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 180,150 C 215,155 240,166 250,174" fill="none" stroke="#2D5262" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 170,162 C 200,166 225,176 235,183" fill="none" stroke="#2D5262" stroke-width="4" stroke-linecap="round"/>
+
+              <!-- Pectoral Fin -->
+              <path d="M 152,142 C 142,175 168,188 178,162 C 172,152 162,145 152,142 Z" fill="#E8E2D5" stroke="#2D5262" stroke-width="5" stroke-linejoin="round"/>
+
+              <!-- Eye -->
+              <circle cx="238" cy="122" r="4.5" fill="#2D5262"/>
+
+              <!-- Ocean Waves -->
+              <path d="M 20,138 Q 55,128 90,138 T 160,138 T 230,138 T 300,138" fill="none" stroke="#2D5262" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M 20,156 Q 55,146 90,156 T 160,156 T 230,156 T 300,156" fill="none" stroke="#2D5262" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M 20,174 Q 55,164 90,174 T 160,174 T 230,174 T 300,174" fill="none" stroke="#2D5262" stroke-width="4.5" stroke-linecap="round"/>
+
+              <!-- Trash Lineart Icons Below Waves -->
+              <g transform="translate(38, 185) rotate(-12)">
+                <rect x="0" y="0" width="22" height="34" rx="5" fill="#E8E2D5" stroke="#2D5262" stroke-width="4"/>
+                <line x1="0" y1="9" x2="22" y2="9" stroke="#2D5262" stroke-width="3"/>
+                <line x1="0" y1="25" x2="22" y2="25" stroke="#2D5262" stroke-width="3"/>
+              </g>
+
+              <g transform="translate(118, 186) rotate(8)">
+                <path d="M 4,12 L 24,12 L 27,38 C 27,42 21,44 14,44 C 7,44 1,42 1,38 Z" fill="#E8E2D5" stroke="#2D5262" stroke-width="4"/>
+                <path d="M 7,12 C 7,5 12,5 12,12 M 16,12 C 16,5 21,5 21,12" fill="none" stroke="#2D5262" stroke-width="3.5"/>
+              </g>
+
+              <g transform="translate(198, 188) rotate(-30)">
+                <rect x="6" y="0" width="10" height="6" rx="1.5" fill="#2D5262"/>
+                <path d="M 8,6 L 4,14 L 4,36 C 4,40 18,40 18,36 L 18,14 L 14,6 Z" fill="#E8E2D5" stroke="#2D5262" stroke-width="4"/>
+                <line x1="4" y1="22" x2="18" y2="22" stroke="#2D5262" stroke-width="3"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- App Title & Slogan -->
+          <h1 class="font-display text-2xl font-black text-deep-ocean tracking-wider mt-1 uppercase">ANIMAL LIFE SAVER!</h1>
+          <p class="text-xs font-semibold text-slate-700 mt-1 italic tracking-tight">
+            "pick up trash a day keeps a bad mood away"
+          </p>
+        </div>
+
+        <!-- Carousel Info Box -->
+        <div class="bg-sand-card p-4 rounded-2xl shadow-sm border border-stone-300 my-2 text-left">
+          <div id="info-slide-1" class="info-slide">
+            <div class="flex items-center space-x-2 mb-1.5">
+              <span class="p-1.5 bg-sky-100 text-whale-blue rounded-lg text-lg">🐢</span>
+              <h3 class="font-display text-sm font-bold text-deep-ocean">Save Marine Animals</h3>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Plastic trash on land washes into rivers and oceans. Picking up litter prevents whales, sea turtles, and fish from accidentally eating harmful pollution!
+            </p>
+          </div>
+
+          <div id="info-slide-2" class="info-slide hidden">
+            <div class="flex items-center space-x-2 mb-1.5">
+              <span class="p-1.5 bg-amber-100 text-amber-700 rounded-lg text-lg">🎁</span>
+              <h3 class="font-display text-sm font-bold text-deep-ocean">Earn Rewards & Gift Cards</h3>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Create your Eco-Saver ID, snap photos when you pick up and throw away trash, and collect points to redeem real gift cards!
+            </p>
+          </div>
+
+          <!-- Slide Dots -->
+          <div class="flex justify-center space-x-1.5 mt-3">
+            <button onclick="switchSlide(1)" id="dot-1" class="w-2.5 h-2.5 rounded-full bg-whale-blue transition-all"></button>
+            <button onclick="switchSlide(2)" id="dot-2" class="w-2.5 h-2.5 rounded-full bg-slate-300 transition-all"></button>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="w-full">
+          <button onclick="navigateTo('screen-register')" class="w-full py-3.5 bg-whale-blue hover:bg-deep-ocean text-white font-display font-bold rounded-2xl shadow-md transition-all transform active:scale-95 flex items-center justify-center space-x-2">
+            <span>Get Started & Create ID</span>
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+          <p class="text-[10px] text-slate-500 mt-2">Free to use • Help protect ocean life</p>
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 2: REGISTRATION & IDENTIFICATION ================= -->
+      <section id="screen-register" class="app-screen flex-col h-full p-6 space-y-4">
+        
+        <div class="text-left">
+          <h2 class="font-display text-xl font-bold text-deep-ocean">Create Your Eco Hero ID</h2>
+          <p class="text-xs text-slate-600 mt-0.5">Identification helps secure your reward points!</p>
+        </div>
+
+        <!-- Explanation Banner -->
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex items-start space-x-3">
+          <i data-lucide="shield-check" class="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5"></i>
+          <div>
+            <h4 class="font-display text-xs font-bold text-amber-900">Why Identification?</h4>
+            <p class="text-[11px] text-amber-800 leading-tight mt-0.5">
+              We link your verified trash pickup points safely to your ID so you can redeem gift cards in the Rewards Shop!
+            </p>
+          </div>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="id-form" onsubmit="handleRegister(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Your Eco Hero Name</label>
+            <div class="relative">
+              <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+              <input type="text" id="user-name-input" required placeholder="e.g. Maya Ocean Defender" class="w-full bg-white pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-whale-blue outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Select Favorite Ocean Mascot</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="selectMascot('whale')" id="mascot-whale" class="mascot-btn p-3 bg-sky-50 border-2 border-whale-blue rounded-xl flex flex-col items-center">
+                <span class="text-2xl">🐋</span>
+                <span class="text-[10px] font-bold text-slate-700 mt-1">Whale</span>
+              </button>
+              <button type="button" onclick="selectMascot('turtle')" id="mascot-turtle" class="mascot-btn p-3 bg-white border-2 border-slate-200 rounded-xl flex flex-col items-center">
+                <span class="text-2xl">🐢</span>
+                <span class="text-[10px] font-bold text-slate-700 mt-1">Turtle</span>
+              </button>
+              <button type="button" onclick="selectMascot('dolphin')" id="mascot-dolphin" class="mascot-btn p-3 bg-white border-2 border-slate-200 rounded-xl flex flex-col items-center">
+                <span class="text-2xl">🐬</span>
+                <span class="text-[10px] font-bold text-slate-700 mt-1">Dolphin</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 bg-whale-blue hover:bg-deep-ocean text-white font-display font-bold rounded-2xl shadow-md transition-all flex items-center justify-center space-x-2">
+            <span>Complete Setup & Start Saving Animals</span>
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+          </button>
+        </form>
+
+      </section>
+
+      <!-- ================= SCREEN 3: MAIN DASHBOARD ================= -->
+      <section id="screen-dashboard" class="app-screen flex-col h-full p-5 space-y-4 pb-20">
+        
+        <!-- Header Profile Card -->
+        <div class="bg-sand-card p-4 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div id="dashboard-mascot-badge" class="w-12 h-12 bg-sky-100 border border-sky-200 rounded-2xl flex items-center justify-center text-2xl shadow-inner">
+              🐋
+            </div>
+            <div>
+              <h3 id="display-user-name" class="font-display font-bold text-deep-ocean text-sm">Maya Ocean Defender</h3>
+              <p id="display-user-id" class="text-[10px] font-mono font-bold text-slate-500">#ALS-8829</p>
+            </div>
+          </div>
+          <div class="text-right bg-amber-100 text-amber-900 px-3 py-1.5 rounded-xl border border-amber-200">
+            <span id="user-points" class="font-display font-bold text-xs">120 pts</span>
+            <p class="text-[9px] text-amber-700 font-semibold">Points Ready</p>
+          </div>
+        </div>
+
+        <!-- Main Action Banner: Snap Trash -->
+        <div class="bg-gradient-to-br from-whale-blue to-deep-ocean text-white p-5 rounded-3xl shadow-lg relative overflow-hidden flex flex-col justify-between space-y-4">
+          <div class="relative z-10">
+            <span class="bg-white/20 text-white text-[9px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full">Daily Mission</span>
+            <h2 class="font-display text-lg font-bold mt-2">Pick Up & Scan Trash</h2>
+            <p class="text-xs text-sky-100 mt-1 max-w-[85%]">
+              "Pick up trash a day keeps a bad mood away!" Take a photo to earn points and protect sea life.
+            </p>
+          </div>
+          <button onclick="triggerCamera()" class="relative z-10 w-full py-3 bg-pastel-yellow hover:bg-yellow-400 text-deep-ocean font-display font-bold rounded-2xl shadow-md transition-all flex items-center justify-center space-x-2 text-sm">
+            <i data-lucide="camera" class="w-5 h-5"></i>
+            <span>Snap Trash & Earn Points</span>
+          </button>
+        </div>
+
+        <!-- Sea Life Fact Card -->
+        <div class="bg-sky-50 border border-sky-100 p-3.5 rounded-2xl flex items-start space-x-3">
+          <span class="text-2xl">🐬</span>
+          <div>
+            <h5 class="font-display text-xs font-bold text-deep-ocean">Sea Life Fact of the Day</h5>
+            <p class="text-[11px] text-slate-600 mt-0.5">Dolphins often mistake floating plastics for food. Picking up just one plastic item keeps marine habitats safe!</p>
+          </div>
+        </div>
+
+        <!-- General Q&A Quick Banner -->
+        <div onclick="navigateTo('screen-chat')" class="bg-gradient-to-r from-sky-100 to-indigo-50 border border-sky-200 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer hover:shadow-md transition-all">
+          <div class="flex items-center space-x-3">
+            <span class="text-2xl">💡</span>
+            <div>
+              <h5 class="font-display text-xs font-bold text-deep-ocean">Ask Whalely AI (General Knowledge & Facts)</h5>
+              <p class="text-[10px] text-slate-600">Ask any questions about science, space, history, or animals! (No homework answers)</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 text-whale-blue"></i>
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 4: GENERAL KNOWLEDGE Q&A CHAT ================= -->
+      <section id="screen-chat" class="app-screen flex-col h-full p-4 space-y-3 pb-20 overflow-hidden">
+        
+        <!-- Header -->
+        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 bg-sky-100 text-whale-blue rounded-xl flex items-center justify-center text-xl">
+              🧠
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-slate-800 text-sm">Whalely AI Assistant</h3>
+              <p class="text-[10px] text-emerald-600 font-semibold flex items-center space-x-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-ping"></span>
+                <span>Online • Answers Science, Animals, History & General Qs</span>
+              </p>
+            </div>
+          </div>
+          <span class="text-[10px] bg-purple-50 text-purple-700 font-bold px-2 py-1 rounded-lg">General AI</span>
+        </div>
+
+        <!-- Subject Topic Quick Filters -->
+        <div class="flex space-x-1.5 overflow-x-auto pb-1 text-[10px] no-scrollbar">
+          <button onclick="askPreset('Tell me a cool fact about Space and Planets!')" class="px-2.5 py-1 bg-white border border-sky-200 text-deep-ocean rounded-full whitespace-nowrap hover:bg-sky-50 transition-colors flex items-center space-x-1">
+            <span>🚀</span><span>Space & Stars</span>
+          </button>
+          <button onclick="askPreset('Tell me cool facts about land animals like lions and elephants!')" class="px-2.5 py-1 bg-white border border-sky-200 text-deep-ocean rounded-full whitespace-nowrap hover:bg-sky-50 transition-colors flex items-center space-x-1">
+            <span>🦁</span><span>Land Animals</span>
+          </button>
+          <button onclick="askPreset('Tell me about Whales and Sea Turtles!')" class="px-2.5 py-1 bg-white border border-sky-200 text-deep-ocean rounded-full whitespace-nowrap hover:bg-sky-50 transition-colors flex items-center space-x-1">
+            <span>🐋</span><span>Sea Life</span>
+          </button>
+          <button onclick="askPreset('Tell me a history fact about Ancient Egypt!')" class="px-2.5 py-1 bg-white border border-sky-200 text-deep-ocean rounded-full whitespace-nowrap hover:bg-sky-50 transition-colors flex items-center space-x-1">
+            <span>📜</span><span>History</span>
+          </button>
+          <button onclick="askPreset('Can you do my math homework for me?')" class="px-2.5 py-1 bg-amber-50 border border-amber-200 text-amber-900 rounded-full whitespace-nowrap hover:bg-amber-100 transition-colors flex items-center space-x-1">
+            <span>✏️</span><span>Homework Policy</span>
+          </button>
+        </div>
+
+        <!-- Chat Messages Container -->
+        <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-3 bg-sand-card/60 p-3 rounded-2xl border border-stone-200/60 text-xs">
+          <!-- Initial Bot Welcome -->
+          <div class="flex items-start space-x-2">
+            <div class="w-7 h-7 bg-sky-200 text-deep-ocean rounded-full flex items-center justify-center text-sm flex-shrink-0">🧠</div>
+            <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm max-w-[85%] text-slate-700">
+              <p class="font-bold text-deep-ocean text-[11px] mb-0.5">Whalely AI Assistant</p>
+              Hi there! I can answer questions about science, space, history, wild animals, and nature! 🌟<br><br>
+              <span class="text-[11px] font-semibold text-amber-800 bg-amber-50 px-2 py-1 rounded-md block border border-amber-200 mt-1">
+                ✏️ <b>Note:</b> I do not answer questions about the app itself, trash, or homework!
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form onsubmit="handleChatSubmit(event)" class="flex items-center space-x-2 pt-1">
+          <input type="text" id="chat-input" placeholder="Ask any question about animals, space, history..." class="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs outline-none focus:ring-2 focus:ring-whale-blue shadow-sm">
+          <button type="submit" class="p-2.5 bg-whale-blue hover:bg-deep-ocean text-white rounded-xl shadow-md transition-all">
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </form>
+
+      </section>
+
+      <!-- ================= SCREEN: SAFETY & RULES ================= -->
+      <section id="screen-safety" class="app-screen flex-col h-full p-6 text-center justify-center space-y-6">
+        <div class="flex flex-col items-center">
+          <div class="w-24 h-24 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner border-4 border-white">
+            🛑
+          </div>
+          <h2 class="font-display text-2xl font-black text-red-600 uppercase tracking-wide">Hold on, Explorer!</h2>
+          <p class="text-xs font-semibold text-slate-600 mt-2">
+            Whalely AI is designed for fun learning, but there are some rules!
+          </p>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-left space-y-3">
+          <p class="text-[11px] text-slate-700 font-bold border-b border-slate-100 pb-2">Whalely cannot answer questions about:</p>
+          <ul class="text-[11px] text-slate-600 space-y-2">
+            <li class="flex items-start space-x-2">
+              <span class="text-red-500">❌</span>
+              <span><b>Homework:</b> Whalely won't do your math or write your essays. Learning is your superpower!</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-500">❌</span>
+              <span><b>The App Itself:</b> Whalely doesn't know about gift cards or points.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-500">❌</span>
+              <span><b>Trash/Pollution:</b> Whalely wants to focus on the beautiful animals and science!</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-red-500">❌</span>
+              <span><b>Scary or Unsafe Topics:</b> Whalely keeps things happy, positive, and safe for all ages!</span>
+            </li>
+          </ul>
+        </div>
+
+        <button onclick="navigateTo('screen-chat')" class="w-full py-3.5 bg-whale-blue hover:bg-deep-ocean text-white font-display font-bold rounded-2xl shadow-md transition-all">
+          I Understand, Back to Chat
+        </button>
+      </section>
+
+      <!-- ================= SCREEN 5: REWARDS STORE ================= -->
+      <section id="screen-rewards" class="app-screen flex-col h-full p-5 space-y-4 pb-20">
+        
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-display text-xl font-bold text-deep-ocean">Rewards Shop</h2>
+            <p class="text-xs text-slate-500">Trade trash points for real rewards!</p>
+          </div>
+          <div class="bg-amber-100 text-amber-800 px-3 py-1 rounded-xl text-xs font-bold flex items-center space-x-1">
+            <i data-lucide="coins" class="w-3.5 h-3.5"></i>
+            <span id="shop-user-points">120 pts</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar toward first Gift Card -->
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm">
+          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+            <span>Next Gift Card Goal ($5 Target)</span>
+            <span id="goal-percentage">24%</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div id="goal-bar" class="bg-whale-blue h-full rounded-full transition-all duration-500" style="width: 24%"></div>
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1.5">Earn 500 points to unlock a $5 Gift Card!</p>
+        </div>
+
+        <!-- Reward List -->
+        <div class="space-y-3">
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-red-50 text-red-500 rounded-xl flex items-center justify-center font-bold text-lg">
+                🎯
+              </div>
+              <div>
+                <h4 class="font-display text-xs font-bold text-slate-800">$5 Target Gift Card</h4>
+                <p class="text-[10px] text-slate-500">Digital code delivered in-app</p>
+                <span class="text-[10px] font-bold text-amber-600">500 Points</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('$5 Target Gift Card', 500)" class="px-3 py-1.5 bg-slate-100 text-slate-600 font-display text-xs font-bold rounded-xl hover:bg-whale-blue hover:text-white transition-colors">
+              Redeem
+            </button>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                ☕
+              </div>
+              <div>
+                <h4 class="font-display text-xs font-bold text-slate-800">$10 Starbucks Gift Card</h4>
+                <p class="text-[10px] text-slate-500">Digital code delivered in-app</p>
+                <span class="text-[10px] font-bold text-amber-600">950 Points</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('$10 Starbucks Gift Card', 950)" class="px-3 py-1.5 bg-slate-100 text-slate-600 font-display text-xs font-bold rounded-xl hover:bg-whale-blue hover:text-white transition-colors">
+              Redeem
+            </button>
+          </div>
+
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                🍼
+              </div>
+              <div>
+                <h4 class="font-display text-xs font-bold text-slate-800">Ocean Saver Water Bottle</h4>
+                <p class="text-[10px] text-slate-500">Stainless steel eco bottle shipped to you</p>
+                <span class="text-[10px] font-bold text-amber-600">1200 Points</span>
+              </div>
+            </div>
+            <button onclick="redeemReward('Ocean Saver Water Bottle', 1200)" class="px-3 py-1.5 bg-slate-100 text-slate-600 font-display text-xs font-bold rounded-xl hover:bg-whale-blue hover:text-white transition-colors">
+              Redeem
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ================= SCREEN 6: PROFILE & IMPACT ================= -->
+      <section id="screen-profile" class="app-screen flex-col h-full p-5 space-y-4 pb-20">
+        <h2 class="font-display text-xl font-bold text-deep-ocean">Impact & Badges</h2>
+
+        <!-- ID Card Summary -->
+        <div class="bg-gradient-to-br from-whale-blue to-deep-ocean text-white p-4 rounded-2xl shadow-md space-y-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-[10px] text-sky-200 uppercase tracking-widest font-bold">Official Animal Life Saver</p>
+              <h3 id="profile-card-name" class="font-display text-lg font-bold">Maya Ocean Defender</h3>
+            </div>
+            <span class="text-3xl">🐋</span>
+          </div>
+          <div class="flex justify-between text-xs pt-2 border-t border-white/20">
+            <div>
+              <p class="text-[9px] text-sky-200">VERIFIED ID</p>
+              <p id="profile-card-id" class="font-mono font-bold text-amber-300">#ALS-8829</p>
+            </div>
+            <div>
+              <p class="text-[9px] text-sky-200">TOTAL TRASH REMOVED</p>
+              <p id="profile-trash-count" class="font-bold">2 Items</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Badges Earned -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-100 space-y-3">
+          <h4 class="font-display text-xs font-bold text-slate-800">Your Achievement Badges</h4>
+          
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 flex flex-col items-center">
+              <span class="text-2xl">🌱</span>
+              <span class="text-[10px] font-bold text-amber-900 mt-1">First Pick</span>
+            </div>
+            <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200 flex flex-col items-center">
+              <span class="text-2xl">🌊</span>
+              <span class="text-[10px] font-bold text-sky-900 mt-1">Coast Guard</span>
+            </div>
+            <div class="p-2.5 bg-slate-50 opacity-40 rounded-xl border border-slate-200 flex flex-col items-center">
+              <span class="text-2xl">👑</span>
+              <span class="text-[10px] font-bold text-slate-600 mt-1">Ocean King</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mood Tracker Log -->
+        <div class="bg-emerald-50 border border-emerald-100 p-3.5 rounded-2xl flex items-center space-x-3">
+          <span class="text-2xl">😊</span>
+          <div>
+            <h5 class="font-display text-xs font-bold text-emerald-900">Mood Tracker</h5>
+            <p class="text-[11px] text-emerald-700 mt-0.5">You logged cleanups this week! Your mood rating is 100% brighter.</p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- CAMERA OVERLAY SIMULATION MODAL -->
+    <div id="camera-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex-col items-center justify-between p-6">
+      <div class="w-full flex justify-between text-white text-xs items-center">
+        <span class="font-display font-bold text-sky-300">Trash Verification Camera</span>
+        <button onclick="closeCamera()" class="p-1 rounded-full bg-white/20"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <!-- Viewfinder Box -->
+      <div class="w-64 h-56 border-2 border-dashed border-sky-400 rounded-3xl flex flex-col items-center justify-center text-white p-4 relative overflow-hidden bg-slate-800/80">
+        <i data-lucide="camera" class="w-10 h-10 text-sky-300 animate-pulse mb-2"></i>
+        <p class="text-xs font-semibold text-slate-200 text-center">Point at trash item you picked up</p>
+      </div>
+
+      <!-- Trash Item Selector -->
+      <div class="w-full bg-slate-900/90 p-3 rounded-2xl border border-slate-700 text-left space-y-2">
+        <p class="text-[11px] font-bold text-sky-300 uppercase tracking-wider">Select Item Cleaned:</p>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button onclick="selectTrashType('Plastic Bottle', 50)" class="trash-type-btn p-2 bg-slate-800 text-white rounded-xl border border-sky-500 flex items-center space-x-2 text-left">
+            <span>🍾</span>
+            <div>
+              <div class="font-bold">Bottle</div>
+              <div class="text-[9px] text-amber-400">+50 Pts</div>
+            </div>
+          </button>
+          <button onclick="selectTrashType('Plastic Bag', 40)" class="trash-type-btn p-2 bg-slate-800 text-slate-300 rounded-xl border border-slate-700 flex items-center space-x-2 text-left">
+            <span>🛍️</span>
+            <div>
+              <div class="font-bold">Plastic Bag</div>
+              <div class="text-[9px] text-amber-400">+40 Pts</div>
+            </div>
+          </button>
+          <button onclick="selectTrashType('Aluminum Can', 35)" class="trash-type-btn p-2 bg-slate-800 text-slate-300 rounded-xl border border-slate-700 flex items-center space-x-2 text-left">
+            <span>🥫</span>
+            <div>
+              <div class="font-bold">Can</div>
+              <div class="text-[9px] text-amber-400">+35 Pts</div>
+            </div>
+          </button>
+          <button onclick="selectTrashType('Food Wrapper', 30)" class="trash-type-btn p-2 bg-slate-800 text-slate-300 rounded-xl border border-slate-700 flex items-center space-x-2 text-left">
+            <span>🍬</span>
+            <div>
+              <div class="font-bold">Wrapper</div>
+              <div class="text-[9px] text-amber-400">+30 Pts</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="w-full space-y-3">
+        <button onclick="simulateTrashCapture()" id="capture-btn" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-display font-bold rounded-2xl shadow-lg flex items-center justify-center space-x-2">
+          <i data-lucide="check-circle" class="w-5 h-5"></i>
+          <span>Snap & Save Animal (+<span id="selected-points-val">50</span> Pts)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CUSTOM TOAST / ALERT MODAL -->
+    <div id="toast-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-6">
+      <div class="bg-white rounded-3xl p-5 max-w-xs w-full text-center space-y-3 shadow-2xl">
+        <div id="toast-icon" class="text-4xl">🎉</div>
+        <h3 id="toast-title" class="font-display font-bold text-slate-800 text-base">Notification</h3>
+        <p id="toast-body" class="text-xs text-slate-600 leading-relaxed"></p>
+        <button onclick="closeToast()" class="w-full py-2.5 bg-whale-blue hover:bg-deep-ocean text-white font-display font-bold rounded-xl text-xs">
+          Got It!
+        </button>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav id="bottom-nav" class="hidden absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2.5 flex justify-between items-center z-30">
+      <button onclick="navigateTo('screen-dashboard')" id="nav-dashboard" class="nav-btn text-whale-blue flex flex-col items-center">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[9px] font-bold mt-0.5">Home</span>
+      </button>
+      <button onclick="navigateTo('screen-chat')" id="nav-chat" class="nav-btn text-slate-400 flex flex-col items-center">
+        <i data-lucide="message-square" class="w-5 h-5"></i>
+        <span class="text-[9px] font-bold mt-0.5">Ask Whalely</span>
+      </button>
+      <button onclick="navigateTo('screen-rewards')" id="nav-rewards" class="nav-btn text-slate-400 flex flex-col items-center">
+        <i data-lucide="gift" class="w-5 h-5"></i>
+        <span class="text-[9px] font-bold mt-0.5">Rewards</span>
+      </button>
+      <button onclick="navigateTo('screen-profile')" id="nav-profile" class="nav-btn text-slate-400 flex flex-col items-center">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[9px] font-bold mt-0.5">My ID</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- JavaScript App Logic -->
+  <script>
+    let state = {
+      userName: "Maya Ocean Defender",
+      userMascot: "whale",
+      points: 120,
+      trashCount: 2,
+      userId: "#ALS-" + Math.floor(1000 + Math.random() * 9000),
+      selectedTrashPoints: 50,
+      selectedTrashType: "Plastic Bottle"
+    };
+
+    lucide.createIcons();
+
+    function showToast(title, body, icon = "🎉") {
+      const toastEl = document.getElementById('toast-modal');
+      document.getElementById('toast-title').innerText = title;
+      document.getElementById('toast-body').innerText = body;
+      document.getElementById('toast-icon').innerText = icon;
+      toastEl.classList.remove('hidden');
+      toastEl.classList.add('flex');
+    }
+
+    function closeToast() {
+      const toastEl = document.getElementById('toast-modal');
+      toastEl.classList.add('hidden');
+      toastEl.classList.remove('flex');
+    }
+
+    function selectTrashType(type, pts) {
+      state.selectedTrashType = type;
+      state.selectedTrashPoints = pts;
+      const ptsVal = document.getElementById('selected-points-val');
+      if (ptsVal) ptsVal.innerText = pts;
+
+      document.querySelectorAll('.trash-type-btn').forEach(btn => {
+        btn.classList.replace('border-sky-500', 'border-slate-700');
+        btn.classList.replace('text-white', 'text-slate-300');
+      });
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.replace('border-slate-700', 'border-sky-500');
+        event.currentTarget.classList.replace('text-slate-300', 'text-white');
+      }
+    }
+
+    function switchSlide(slideNum) {
+      document.querySelectorAll('.info-slide').forEach(s => s.classList.add('hidden'));
+      const activeSlide = document.getElementById(`info-slide-${slideNum}`);
+      if (activeSlide) activeSlide.classList.remove('hidden');
+      
+      const d1 = document.getElementById('dot-1');
+      const d2 = document.getElementById('dot-2');
+      if (d1) d1.className = slideNum === 1 ? 'w-2.5 h-2.5 rounded-full bg-whale-blue transition-all' : 'w-2.5 h-2.5 rounded-full bg-slate-300 transition-all';
+      if (d2) d2.className = slideNum === 2 ? 'w-2.5 h-2.5 rounded-full bg-whale-blue transition-all' : 'w-2.5 h-2.5 rounded-full bg-slate-300 transition-all';
+    }
+
+    function navigateTo(screenId) {
+      document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+      
+      const targetScreen = document.getElementById(screenId);
+      if (targetScreen) {
+        targetScreen.classList.add('active');
+      }
+
+      const bottomNav = document.getElementById('bottom-nav');
+      if (bottomNav) {
+        if (screenId === 'screen-onboarding' || screenId === 'screen-register') {
+          bottomNav.classList.add('hidden');
+        } else {
+          bottomNav.classList.remove('hidden');
+        }
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-whale-blue');
+        btn.classList.add('text-slate-400');
+      });
+
+      const navKey = screenId.replace('screen-', '');
+      const activeNavBtn = document.getElementById(`nav-${navKey}`);
+      if (activeNavBtn) {
+        activeNavBtn.classList.remove('text-slate-400');
+        activeNavBtn.classList.add('text-whale-blue');
+      }
+    }
+
+    // Homework intent keywords to block solving direct assignments
+    const homeworkKeywords = [
+      "homework", "do my", "solve for", "solve this", "equation", "essay", "write an essay", 
+      "summary of", "math problem", "calculus", "algebra", "derivative", "integral", "worksheet",
+      "test question", "quiz question", "assignment"
+    ];
+
+    const appKeywords = [
+      "app", "gift card", "card", "points", "reward", "redeem", "how it works", "slogan", "animal life saver"
+    ];
+
+    const trashKeywords = [
+      "trash", "plastic", "garbage", "pollution", "litter", "recycle", "straw", "bottle", "can", "wrapper"
+    ];
+
+    // Unsafe/Inappropriate keywords for strict kid safety
+    const unsafeKeywords = [
+      "kill", "murder", "blood", "gun", "weapon", "bomb", "drugs", "alcohol", "violence", "scary", "war", "death", "die", "bad word"
+    ];
+
+    async function fetchRealAnswer(searchTopic) {
+      try {
+        // Search Wikipedia specifically for the exact extracted topic
+        const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchTopic)}&utf8=&format=json&origin=*`);
+        const searchData = await searchRes.json();
+        
+        if (searchData.query.search && searchData.query.search.length > 0) {
+          const title = searchData.query.search[0].title;
+          
+          // Fetch the first 2-3 sentences of the matched article
+          const extractRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=3&exintro=true&explaintext=true&titles=${encodeURIComponent(title)}&format=json&origin=*`);
+          const extractData = await extractRes.json();
+          const pages = extractData.query.pages;
+          const pageId = Object.keys(pages)[0];
+          
+          if (pages[pageId] && pages[pageId].extract) {
+            // Simplify Wikipedia text for kids: remove text in parentheses (pronunciations, dates) and brackets
+            let kidFriendlyText = pages[pageId].extract.replace(/\([^)]*\)/g, '').replace(/\[[^\]]*\]/g, '').trim();
+            
+            // Clean up double spaces that might be left over from removing parentheses
+            kidFriendlyText = kidFriendlyText.replace(/\s{2,}/g, ' ');
+
+            // Split by periods to ensure we only get a short, easily digestible chunk (max 2 sentences)
+            let sentences = kidFriendlyText.split('. ');
+            if (sentences.length > 2) {
+               kidFriendlyText = sentences.slice(0, 2).join('. ') + '.';
+            } else {
+               kidFriendlyText = sentences.join('. ');
+            }
+            
+            return kidFriendlyText;
+          }
+        }
+        return null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // Extensive General Knowledge, Nature, Science, Animals, History Base
+    const generalKnowledgeBase = [
+      {
+        keywords: ["space", "planet", "planets", "star", "stars", "sun", "moon", "mars", "galaxy", "universe", "asteroid"],
+        answer: "Did you know the Sun makes up 99.8% of all mass in our entire solar system? Also, space is completely silent because there is no air or atmosphere for sound waves to travel through!"
+      },
+      {
+        keywords: ["lion", "elephant", "cheetah", "tiger", "bear", "wolf", "land animal", "dog", "cat", "giraffe"],
+        answer: "Cheetahs can accelerate from 0 to 60 mph in just 3 seconds! And elephants are the only land mammals that can't jump. Every animal plays a huge role in balancing their ecosystem!"
+      },
+      {
+        keywords: ["dinosaur", "dinosaurs", "t-rex", "fossil", "jurassic", "extinct"],
+        answer: "Dinosaurs roamed Earth for over 165 million years! Did you know modern birds are actually living descendants of theropod dinosaurs?"
+      },
+      {
+        keywords: ["volcano", "weather", "rain", "lightning", "earthquake", "thunder", "cloud", "tree", "plant", "photosynthesis"],
+        answer: "Trees communicate with each other underwater and underground through vast fungal networks known as the 'Wood Wide Web'! Lightning strikes Earth about 100 times every single second."
+      },
+      {
+        keywords: ["invent", "invention", "car", "airplane", "telephone", "internet", "computer", "lightbulb"],
+        answer: "The airplane was first flown by the Wright brothers in 1903 for just 12 seconds! The internet began in 1969 as a network called ARPANET. Human curiosity leads to remarkable technological breakthroughs!"
+      },
+      {
+        keywords: ["sports", "soccer", "basketball", "football", "olympics", "running", "chess"],
+        answer: "Soccer (football) is the most popular sport in the world, played by over 250 million people in 200 countries! Playing sports releases endorphins that keep you energized and happy."
+      },
+      {
+        keywords: ["turtle", "turtles", "jellyfish", "shell"],
+        answer: "Sea turtles have been swimming in our oceans for over 110 million years! They are fascinating marine reptiles that navigate using the Earth's magnetic field."
+      },
+      {
+        keywords: ["whale", "whales", "blue whale", "humpback", "sing", "baleen"],
+        answer: "Whales communicate across hundreds of miles using melodic underwater songs! Blue whales are the largest animals to ever exist on Earth (up to 100 feet long)."
+      },
+      {
+        keywords: ["dolphin", "dolphins", "echolocation", "porpoise"],
+        answer: "Dolphins use 'echolocation'—bouncing sound waves off objects—to 'see' underwater! They are highly intelligent and social animals."
+      },
+      {
+        keywords: ["history", "rome", "egypt", "ancient", "pyramid"],
+        answer: "The Great Pyramid of Giza was built over 4,500 years ago! History helps us understand how civilizations evolved over time."
+      }
+    ];
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      if (!input) return;
+      const question = input.value.trim();
+      if (!question) return;
+      askQuestion(question);
+      input.value = '';
+    }
+
+    function askPreset(qText) {
+      askQuestion(qText);
+    }
+
+    async function askQuestion(userText) {
+      const container = document.getElementById('chat-messages-container');
+      if (!container) return;
+      
+      // Render user message bubble
+      const userBubble = document.createElement('div');
+      userBubble.className = "flex items-start justify-end space-x-2";
+      userBubble.innerHTML = `
+        <div class="bg-whale-blue text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[85%]">
+          ${userText}
+        </div>
+        <div class="w-7 h-7 bg-amber-200 text-amber-900 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">You</div>
+      `;
+      container.appendChild(userBubble);
+      container.scrollTop = container.scrollHeight;
+
+      // Render Typing Indicator
+      const typingBubble = document.createElement('div');
+      typingBubble.id = 'typing-indicator';
+      typingBubble.className = "flex items-start space-x-2 mt-3";
+      typingBubble.innerHTML = `
+        <div class="w-7 h-7 bg-sky-200 text-deep-ocean rounded-full flex items-center justify-center text-sm flex-shrink-0">🧠</div>
+        <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm flex items-center space-x-1.5">
+          <span class="w-2 h-2 bg-whale-blue rounded-full typing-dot"></span>
+          <span class="w-2 h-2 bg-whale-blue rounded-full typing-dot"></span>
+          <span class="w-2 h-2 bg-whale-blue rounded-full typing-dot"></span>
+        </div>
+      `;
+      container.appendChild(typingBubble);
+      container.scrollTop = container.scrollHeight;
+
+      const lowerText = userText.toLowerCase();
+      let blocked = false;
+
+      // 1. Check for Blocked Intents (Homework, App, Trash, Kid Safety)
+      for (let hwKw of homeworkKeywords) { if (lowerText.includes(hwKw)) blocked = true; }
+      for (let appKw of appKeywords) { if (lowerText.includes(appKw)) blocked = true; }
+      for (let trashKw of trashKeywords) { if (lowerText.includes(trashKw)) blocked = true; }
+      for (let unsafeKw of unsafeKeywords) { if (lowerText.includes(unsafeKw)) blocked = true; }
+
+      if (blocked) {
+        setTimeout(() => {
+          const indicator = document.getElementById('typing-indicator');
+          if (indicator) indicator.remove();
+          navigateTo('screen-safety');
+        }, 600);
+        return;
+      }
+
+      // 2. Extact the core topic of the question by stripping out conversational words
+      let cleanTopic = userText
+        .replace(/^(what is|who is|tell me about|where is|how to|can you explain|what are|why do|why are|tell me a cool fact about|tell me cool facts about|can you do my|tell me a history fact about|give me a fact about|do you know about|what do you know about)\s+/i, '')
+        .replace(/^(a|an|the|some)\s+/i, '')
+        .replace(/[?!.]/g, '')
+        .trim();
+        
+      if (!cleanTopic) cleanTopic = userText; // Fallback if they just typed "what is?"
+
+      // Capitalize the topic for nice bold text display
+      let displayTopic = cleanTopic.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+      // 3. Fetch Real Answer using the newly extracted topic
+      let bestMatch = await fetchRealAnswer(cleanTopic);
+
+      // 4. Format Output and Fallback logic
+      if (!bestMatch) {
+        let highestMatchCount = 0;
+        for (let kb of generalKnowledgeBase) {
+          let matches = 0;
+          kb.keywords.forEach(kw => {
+            if (lowerText.includes(kw)) matches++;
+          });
+          if (matches > highestMatchCount) {
+            highestMatchCount = matches;
+            bestMatch = `🧠 Here is something cool I know about <b>${displayTopic}</b>:<br><br>${kb.answer}`;
+          }
+        }
+        
+        if (!bestMatch) {
+          bestMatch = `💡 That's a very unique question about <b>${displayTopic}</b>! I am still learning about that specific topic. Try asking me something about a specific animal (like Lions or Turtles), space, or historical events!`;
+        }
+      } else {
+         // Successfully found on Wikipedia - specifically mention the Topic!
+         bestMatch = `🧠 Here is what I found about <b>${displayTopic}</b>:<br><br>${bestMatch}`;
+      }
+
+      // Render the final answer
+      setTimeout(() => {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+
+        const botBubble = document.createElement('div');
+        botBubble.className = "flex items-start space-x-2 mt-3";
+        botBubble.innerHTML = `
+          <div class="w-7 h-7 bg-sky-200 text-deep-ocean rounded-full flex items-center justify-center text-sm flex-shrink-0">🧠</div>
+          <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm max-w-[85%] text-slate-700 leading-relaxed">
+            <p class="font-bold text-deep-ocean text-[11px] mb-1">Whalely AI Assistant</p>
+            ${bestMatch}
+          </div>
+        `;
+        container.appendChild(botBubble);
+        container.scrollTop = container.scrollHeight;
+        lucide.createIcons();
+      }, 400);
+    }
+
+    function selectMascot(mascot) {
+      state.userMascot = mascot;
+      document.querySelectorAll('.mascot-btn').forEach(b => {
+        b.classList.remove('bg-sky-50', 'border-whale-blue');
+        b.classList.add('bg-white', 'border-slate-200');
+      });
+      const selectedBtn = document.getElementById(`mascot-${mascot}`);
+      if (selectedBtn) {
+        selectedBtn.classList.remove('bg-white', 'border-slate-200');
+        selectedBtn.classList.add('bg-sky-50', 'border-whale-blue');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('user-name-input');
+      if (inputEl && inputEl.value.trim() !== '') {
+        state.userName = inputEl.value.trim();
+      }
+
+      const displayUserName = document.getElementById('display-user-name');
+      if (displayUserName) displayUserName.innerText = state.userName;
+
+      const profileCardName = document.getElementById('profile-card-name');
+      if (profileCardName) profileCardName.innerText = state.userName;
+
+      const displayUserId = document.getElementById('display-user-id');
+      if (displayUserId) displayUserId.innerText = state.userId;
+
+      const profileCardId = document.getElementById('profile-card-id');
+      if (profileCardId) profileCardId.innerText = state.userId;
+
+      const mascotEmojis = { whale: '🐋', turtle: '🐢', dolphin: '🐬' };
+      const mascotBadge = document.getElementById('dashboard-mascot-badge');
+      if (mascotBadge) mascotBadge.innerText = mascotEmojis[state.userMascot] || '🐋';
+
+      navigateTo('screen-dashboard');
+    }
+
+    function triggerCamera() {
+      const camModal = document.getElementById('camera-modal');
+      if (camModal) {
+        camModal.classList.remove('hidden');
+        camModal.classList.add('flex');
+      }
+    }
+
+    function closeCamera() {
+      const camModal = document.getElementById('camera-modal');
+      if (camModal) {
+        camModal.classList.add('hidden');
+        camModal.classList.remove('flex');
+      }
+    }
+
+    function simulateTrashCapture() {
+      const btn = document.getElementById('capture-btn');
+      if (btn) btn.innerText = "Analyzing with AI...";
+      
+      setTimeout(() => {
+        state.points += state.selectedTrashPoints;
+        state.trashCount += 1;
+        updatePointsUI();
+        
+        if (btn) {
+          btn.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>+${state.selectedTrashPoints} Points Earned!</span>`;
+          lucide.createIcons();
+        }
+
+        setTimeout(() => {
+          closeCamera();
+          if (btn) {
+            btn.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5"></i><span>Snap & Save Animal (+<span id="selected-points-val">${state.selectedTrashPoints}</span> Pts)</span>`;
+            lucide.createIcons();
+          }
+        }, 1000);
+      }, 1000);
+    }
+
+    function updatePointsUI() {
+      const userPts = document.getElementById('user-points');
+      if (userPts) userPts.innerText = `${state.points} pts`;
+
+      const shopPts = document.getElementById('shop-user-points');
+      if (shopPts) shopPts.innerText = `${state.points} pts`;
+
+      const profileTrashCount = document.getElementById('profile-trash-count');
+      if (profileTrashCount) profileTrashCount.innerText = `${state.trashCount} Items`;
+
+      const pct = Math.min(Math.round((state.points / 500) * 100), 100);
+      const goalBar = document.getElementById('goal-bar');
+      if (goalBar) goalBar.style.width = `${pct}%`;
+
+      const goalPercentage = document.getElementById('goal-percentage');
+      if (goalPercentage) goalPercentage.innerText = `${pct}%`;
+    }
+
+    function redeemReward(name, cost) {
+      if (state.points >= cost) {
+        state.points -= cost;
+        updatePointsUI();
+        const code = "ALS-" + Math.floor(100000 + Math.random() * 900000);
+        showToast("Reward Unlocked! 🎉", `You redeemed ${name}.\n\nYour Digital Claim Code: ${code}`, "🎁");
+      } else {
+        showToast("Keep Going!", `You need ${cost - state.points} more points to unlock ${name}. Keep snapping trash to earn more!`, "🐢");
+      }
+    }
+  </script>
+</body>
+</html>
